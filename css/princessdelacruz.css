@@ -184,6 +184,9 @@ footer a:hover {
     .ying-yang-logo {
         height: 0.9rem;
     }
+    .project-container {
+        flex-direction: column;
+    }
     .project-nav-item-link {
         width: 100%;
         padding: 0;
