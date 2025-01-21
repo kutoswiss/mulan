@@ -150,6 +150,16 @@ footer a:hover {
         height: 0.8rem;
         margin-bottom: 5px;
     }
+    .project-nav-item-middot {
+        font-size: 60px;
+        line-height: 1.1rem;
+    }
+    .project-nav-item-title {
+        font-size: 1.2rem;
+    }
+    .project-nav-item-subtitle{
+        font-size: 0.4rem;
+    }
 }
 
 /* (sm) Small devices (landscape phones, 576px and up) */
@@ -163,6 +173,16 @@ footer a:hover {
     .ying-yang-logo {
         height: 1.1rem;
         margin-bottom: 5px;
+    }
+    .project-nav-item-middot {
+        font-size: 70px;
+        line-height: 1.3rem;
+    }
+    .project-nav-item-title {
+        font-size: 1.5rem;
+    }
+    .project-nav-item-subtitle{
+        font-size: 0.65rem;
     }
 }
 
@@ -178,6 +198,16 @@ footer a:hover {
         height: 1.4rem;
         margin-bottom: 5px;
     }
+    .project-nav-item-middot {
+        font-size: 80px;
+        line-height: 1.3rem;
+    }
+    .project-nav-item-title {
+        font-size: 1.5rem;
+    }
+    .project-nav-item-subtitle{
+        font-size: 0.65rem;
+    }
 }
 
 /* (lg) Large devices (desktops, 992px and up) */
@@ -191,6 +221,16 @@ footer a:hover {
     .ying-yang-logo {
         height: 1.8rem;
         margin-bottom: 5px;
+    }
+    .project-nav-item-middot {
+        font-size: 100px;
+        line-height: 1.7rem;
+    }
+    .project-nav-item-title {
+        font-size: 1.9rem;
+    }
+    .project-nav-item-subtitle{
+        font-size: 0.75rem;
     }
 }
 
