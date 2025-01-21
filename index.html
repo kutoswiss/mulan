@@ -19,58 +19,49 @@
     <!-- Favicon -->
     <link rel="icon" href="assets/favicons/favicon.ico" type="image/x-icon">
 </head>
-<body class="container-fluid">
+<body>
     <!-- Header -->
-    <header class="row">
-        <div class="col-12">
-            <span>
-                <img class="ying-yang-logo" src="assets/logo/YIN-YANG.svg" alt="Princess De La Cruz">
-            </span>
-            <a href="https://www.princessdelacruz.ch">
-                PRINCESS DE LA CRUZ
-            </a>
-            <a class="header-info" href="#" style="float:right;">INFO</a>
-        </div>
+    <header>
+        <img class="ying-yang-logo" src="assets/logo/YIN-YANG.svg" alt="Princess De La Cruz">
+        <a href="https://www.princessdelacruz.ch">PRINCESS DE LA CRUZ</a>
+        <a class="header-info" href="#">INFO</a>
     </header>
 
     <!-- Middle section -->
-    <section class="row">
-        <div class="col-12">
-            <section class="project-container" x-data="{ projects: [
+    <section>
+            <div class="project-container" x-data="{ projects: [
                 { title: 'PALEO FESTIVAL NYON', subtitle: 'VISUAL IDENTITY', image: '01-PFM.png', size: '100%' },
                 { title: 'EDITORIAL', subtitle: '', image: '02-EDITORIAL.png', size: '70%' },
                 { title: 'COMMUNICATION DIGITALE', subtitle: '', image: '03-COMDIGITALE.png', size: '60%' },
                 { title: 'DSIR', subtitle: 'GRAPHIC DESIGN', image: '04-DSIR.png', size: '60%' }, 
                 { title: 'ALL NAILZ ON ME', subtitle: 'NAIL ART', image: '05-NAILZ.jpg', size: '80%' }, 
-                { title: 'DIGITAL LOVE POST', subtitle: 'CREATIVE CODING', image: '06-DLP.png', size: '100%' }]}">
-                <template x-for="project in projects" :key="project">
-                    <a class="project-nav-item-link" 
-                        x-data="{ isHovered: false }" 
-                        @mouseover="isHovered = true" 
-                        @mouseleave="isHovered = false">
-                        <span class="project-nav-item-middot">&middot;</span>
-                        <span class="project-nav-item-title" x-text="project.title"></span>
-                        <span class="project-nav-item-subtitle" x-text="project.subtitle"></span>
-                        <span class="project-nav-item-image" x-show="isHovered" >
+                { title: 'DIGITAL LOVE POST', subtitle: 'CREATIVE CODING', image: '06-DLP.png', size: '80%' }]}">
+                <template x-for="project in projects" :key="project.title">
+                    <div x-data="{ isHovered: false }">
+                        <div class="project-nav-item-image" x-show="isHovered">
                             <img :src="'assets/images/' + project.image" :alt="project.title" :style="{ height: project.size }" />
-                        </span>
-                    </a>
+                        </div>
+                        <a class="project-nav-item-link" 
+                            @mouseover="isHovered = true" 
+                            @mouseleave="isHovered = false">
+                            <span class="project-nav-item-middot">&middot;</span>
+                            <span class="project-nav-item-title" x-text="project.title"></span>
+                            <span class="project-nav-item-subtitle" x-text="project.subtitle"></span>
+                        </a>
+                    </div>
                 </template>
-            </section>
-        </div>
+            </div>
     </section>
 
-    <!-- Header -->
-    <footer class="row">
-        <div class="col-xs-12">
-            <a href="https://linkedin.com/in/princess-de-la-cruz-b43885b7" target="_blank">
-                <span class="linkedin-text">LINKEDIN</span>
-                <img class="linkedin-logo" src="assets/logo/LINKEDIN-480.svg" alt="Princess De La Cruz's LinkedIn page">
-            </a>
-            <a class="footer-email" href="mailto:princessd.cruz@gmail.com" style="float:right;">
-                PRINCESSD.CRUZ@GMAIL.COM
-            </a>
-        </div>
+    <!-- Footer -->
+    <footer>
+        <a href="https://linkedin.com/in/princess-de-la-cruz-b43885b7" target="_blank">
+            <span class="linkedin-text">LINKEDIN</span>
+            <img class="linkedin-logo" src="assets/logo/LINKEDIN-480.svg" alt="Princess De La Cruz's LinkedIn page">
+        </a>
+        <a class="footer-email" href="mailto:princessd.cruz@gmail.com">
+            PRINCESSD.CRUZ@GMAIL.COM
+        </a>
     </footer>
 </body>
 </html>
