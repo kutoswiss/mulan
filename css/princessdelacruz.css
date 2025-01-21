@@ -140,7 +140,7 @@ footer a:hover {
 }
 
 /* (xs) Extra Small devices */
-@media (max-width: 575.98px) {
+@media (max-width: 550px) {
     header {
         font-size: 0.9rem;
     }
@@ -151,49 +151,35 @@ footer a:hover {
         height: 0.8rem;
         margin-bottom: 5px;
     }
+    .project-nav-item-link {
+        width: 100%;
+        margin: 0;
+        padding: 0;
+        text-align: center;
+    }
     .project-nav-item-middot {
         font-size: 60px;
         line-height: 1.1rem;
+        display: none;
     }
     .project-nav-item-title {
         font-size: 1.2rem;
+        width: 100%;
+        margin: 0;
     }
     .project-nav-item-subtitle{
         font-size: 0.4rem;
-    }
-}
-
-/* (sm) Small devices (landscape phones, 576px and up) */
-@media (min-width: 576px) {
-    header {
-        font-size: 1.2rem;
-    }
-    footer{
-        font-size: 1.2rem;
-    }
-    .ying-yang-logo {
-        height: 1.1rem;
-        margin-bottom: 5px;
-    }
-    .project-nav-item-middot {
-        font-size: 70px;
-        line-height: 1.3rem;
-    }
-    .project-nav-item-title {
-        font-size: 1.5rem;
-    }
-    .project-nav-item-subtitle{
-        font-size: 0.65rem;
+        display: none;
     }
 }
 
 /* (md) Medium devices (tablets, 768px and up) */
-@media (min-width: 768px) {
+@media (min-width: 551px) {
     header {
-        font-size: 1.5rem;
+        font-size: 1.3rem;
     }
     footer{
-        font-size: 1.5rem;
+        font-size: 1.3rem;
     }
     .ying-yang-logo {
         height: 1.4rem;
