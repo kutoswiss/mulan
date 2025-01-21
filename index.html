@@ -38,10 +38,10 @@
         <div class="col-12">
             <section class="project-container" x-data="{ projects: [
                 { title: 'PALEO FESTIVAL NYON', subtitle: 'VISUAL IDENTITY', image: '01-PFM.png', size: '100%' },
-                { title: 'EDITORIAL', subtitle: '', image: '02-EDITORIAL.png', size: '100%' },
+                { title: 'EDITORIAL', subtitle: '', image: '02-EDITORIAL.png', size: '70%' },
                 { title: 'COMMUNICATION DIGITALE', subtitle: '', image: '03-COMDIGITALE.png', size: '60%' },
-                { title: 'DSIR', subtitle: 'GRAPHIC DESIGN', image: '04-DSIR.png', size: '70%' }, 
-                { title: 'ALL NAILZ ON ME', subtitle: 'NAIL ART', image: '05-NAILZ.jpg', size: '100%' }, 
+                { title: 'DSIR', subtitle: 'GRAPHIC DESIGN', image: '04-DSIR.png', size: '60%' }, 
+                { title: 'ALL NAILZ ON ME', subtitle: 'NAIL ART', image: '05-NAILZ.jpg', size: '80%' }, 
                 { title: 'DIGITAL LOVE POST', subtitle: 'CREATIVE CODING', image: '06-DLP.png', size: '100%' }]}">
                 <template x-for="project in projects" :key="project">
                     <a class="project-nav-item-link" 
@@ -51,8 +51,8 @@
                         <span class="project-nav-item-middot">&middot;</span>
                         <span class="project-nav-item-title" x-text="project.title"></span>
                         <span class="project-nav-item-subtitle" x-text="project.subtitle"></span>
-                        <span class="project-nav-item-image" x-show="isHovered" :style="{ height: project.size }">
-                            <img :src="'assets/images/' + project.image" :alt="project.title" />
+                        <span class="project-nav-item-image" x-show="isHovered" >
+                            <img :src="'assets/images/' + project.image" :alt="project.title" :style="{ height: project.size }" />
                         </span>
                     </a>
                 </template>
