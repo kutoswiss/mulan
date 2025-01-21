@@ -51,7 +51,7 @@
                         <span class="project-nav-item-middot">&middot;</span>
                         <span class="project-nav-item-title" x-text="project.title"></span>
                         <span class="project-nav-item-subtitle" x-text="project.subtitle"></span>
-                        <span class="project-nav-item-image" x-show="isHovered" :style="{ width: project.size, height: project.size }">
+                        <span class="project-nav-item-image" x-show="isHovered" :style="{ height: project.size }">
                             <img :src="'assets/images/' + project.image" :alt="project.title" />
                         </span>
                     </a>
