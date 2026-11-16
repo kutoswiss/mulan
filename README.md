@@ -109,6 +109,11 @@ ffmpeg -i master.mov -filter_complex "color=white:s=1080x1080:r=30[bg];[0:v]scal
 
 Video masters (`*.mov`) and zip files in `archive/` are git-ignored. GitHub rejects files over 100 MB.
 
+## Credits
+
+- Pool photos in the Paléo Festival Nyon gallery (`03-photo-piscine-1`, `13-photo-piscine-2`): **Yannis Antoine**.
+- Clapping cat GIFs (`assets/easter-egg/`): [“Cat Clap” sticker](https://giphy.com/stickers/cat-meme-igreenscreenthings-kSoQQslyFDGiMvX5Df) (with handshake, used) and [“Cat Smile” sticker](https://giphy.com/stickers/cat-meme-clap-2neucQvRXgddx8K5rV) on GIPHY.
+
 ## Deployment
 
 Pushing to `main` deploys the site with GitHub Pages. GitHub Pages lets browsers cache files for 10 minutes, so after a deploy, hard-refresh (Ctrl/Cmd + Shift + R) to see the changes straight away.

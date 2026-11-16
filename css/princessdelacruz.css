@@ -316,6 +316,46 @@ body.glightbox-open {
     outline-offset: 3px;
 }
 
+/* Easter egg: clapping cat (js/easter-egg.js) */
+.easter-egg {
+    position: fixed;
+    inset: 0;
+    z-index: 1000000; /* above GLightbox */
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+}
+
+.easter-egg.is-visible {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.2s ease;
+}
+
+.easter-egg img {
+    height: min(60vh, 480px);
+    width: auto;
+    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.35));
+}
+
+.easter-egg.is-visible img {
+    animation: easter-egg-pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes easter-egg-pop {
+    from { transform: scale(0.3) rotate(-8deg); }
+    to   { transform: scale(1) rotate(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .easter-egg.is-visible img {
+        animation: none;
+    }
+}
+
 /* (xs) Extra Small devices */
 @media (max-width: 590px) {
     header {
