@@ -29,3 +29,7 @@ Desktop.ini
 # Claude Code
 CLAUDE.md
 .claude
+
+# Large source media (ProRes masters, zips) - too big for git/GitHub (100 MB file limit)
+assets/images/archive/**/*.mov
+assets/images/archive/**/*.zip

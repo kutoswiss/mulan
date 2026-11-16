@@ -67,10 +67,18 @@
                 <div class="gallery-bento">
                     <template x-for="(image, index) in active.gallery.images" :key="image.file">
                         <a class="gallery-tile"
-                            :class="['tile-' + (image.tile || 'normal'), { 'tile-contain': image.fit === 'contain' }]"
-                            :href="imageUrl(image.file)"
+                            :class="['tile-' + (image.tile || 'normal'), { 'tile-contain': image.fit === 'contain', 'tile-video': isVideo(image) }]"
+                            :href="mediaUrl(image.file)"
+                            :aria-label="active.title + ' ' + (index + 1) + (isVideo(image) ? ' (video)' : '')"
                             @click.prevent="openLightbox(index)">
-                            <img :src="imageUrl(image.file, true)" :alt="active.title + ' ' + (index + 1)" loading="lazy">
+                            <template x-if="!isVideo(image)">
+                                <img :src="mediaUrl(image.file, true)" :alt="active.title + ' ' + (index + 1)" loading="lazy">
+                            </template>
+                            <template x-if="isVideo(image)">
+                                <video :src="mediaUrl(image.file, true)" :poster="posterUrl(image.file)"
+                                    muted loop playsinline preload="none" aria-hidden="true"
+                                    x-init="watchVideo($el)"></video>
+                            </template>
                         </a>
                     </template>
                 </div>

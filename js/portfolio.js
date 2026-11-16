@@ -2,9 +2,11 @@
 // - image:   hover preview, in assets/images/preview/
 // - size:    CSS height of the hover preview
 // - slug:    URL hash that opens the project's gallery (e.g. #digital-love-post)
-// - gallery: optional; folder in assets/images/gallery/ and its images, in display order.
-//            Each image needs a full-size version in the folder and a thumbnail in <folder>/thumbs/.
-//            Bento tile options per image:
+// - gallery: optional; folder in assets/images/gallery/ and its items, in display order.
+//            Each item needs a full-size file in the folder and a thumbnail in <folder>/thumbs/:
+//              image (.webp): thumbs/<name>.webp
+//              video (.mp4):  thumbs/<name>.mp4 (small autoplaying loop) + thumbs/<name>.webp (poster)
+//            Bento tile options per item:
 //              tile: 'big' (2x2) | 'tall' (1x2) | 'wide' (2x1) | omitted (1x1)
 //              fit:  'contain' to show the whole image (e.g. logos) instead of cropping it
 //            Tip: on the 4-column grid, pick tiles so each row adds up to 4 columns.
@@ -17,14 +19,28 @@ const PROJECTS = [
             folder: '01-PALEO',
             images: [
                 { file: '01-affiche.webp', tile: 'big' },
-                { file: '02-photo-piscine-1.webp', tile: 'tall' },
-                { file: '03-affiche-programmation.webp', tile: 'tall' },
-                { file: '04-grille-horaire.webp', tile: 'big' },
-                { file: '05-kaleido.webp' },
-                { file: '06-photo-concert.webp' },
-                { file: '07-photo-piscine-2.webp', tile: 'wide' },
-                { file: '08-photo-foule.webp', tile: 'wide' },
-                { file: '09-programme.webp', tile: 'wide' },
+                { file: '02-animation-affiche.mp4', tile: 'big' },
+                { file: '03-photo-piscine-1.webp', tile: 'tall' },
+                { file: '04-affiche-programmation.webp', tile: 'tall' },
+                { file: '05-animation-merchandising.mp4', tile: 'big' },
+                { file: '06-animation-burna-boy.mp4' },
+                { file: '07-animation-sean-paul.mp4' },
+                { file: '08-animation-hirma.mp4' },
+                { file: '09-animation-slimka.mp4' },
+                { file: '10-grille-horaire.webp', tile: 'big' },
+                { file: '11-animation-chaleur.mp4' },
+                { file: '12-animation-environnement.mp4' },
+                { file: '13-photo-piscine-2.webp', tile: 'wide' },
+                { file: '14-kaleido.webp' },
+                { file: '15-kaleido-1.mp4' },
+                { file: '16-kaleido-2.mp4' },
+                { file: '17-kaleido-3.mp4' },
+                { file: '18-kaleido-4.mp4' },
+                { file: '19-kaleido-5.mp4' },
+                { file: '20-kaleido-6.mp4' },
+                { file: '21-photo-concert.webp' },
+                { file: '22-photo-foule.webp', tile: 'wide' },
+                { file: '23-programme.webp', tile: 'wide' },
             ],
         },
     },
@@ -51,11 +67,18 @@ const PROJECTS = [
     },
 ];
 
+// GLightbox plays videos with Plyr, which it loads on first use. Pin it to the same CDN as the other libraries.
+const PLYR_VERSION = '3.6.12';
+
+const prefersReducedMotion = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 document.addEventListener('alpine:init', () => {
     Alpine.data('portfolio', () => ({
         projects: PROJECTS,
         active: null,
         lightbox: null,
+        lightboxOpen: false,
+        videoObserver: null,
 
         init() {
             this.syncWithHash();
@@ -68,6 +91,7 @@ document.addEventListener('alpine:init', () => {
             const slug = decodeURIComponent(location.hash.slice(1));
             this.active = this.projects.find(p => p.gallery && p.slug === slug) || null;
             this.closeLightbox();
+            this.stopVideoObserver();
             this.$root.scrollTop = 0;
         },
 
@@ -76,16 +100,81 @@ document.addEventListener('alpine:init', () => {
             this.syncWithHash();
         },
 
-        imageUrl(file, thumb = false) {
+        isVideo(item) {
+            return item.file.endsWith('.mp4');
+        },
+
+        mediaUrl(file, thumb = false) {
             return `assets/images/gallery/${this.active.gallery.folder}/${thumb ? 'thumbs/' : ''}${file}`;
+        },
+
+        posterUrl(file) {
+            return this.mediaUrl(file.replace(/\.mp4$/, '.webp'), true);
+        },
+
+        // Grid video tiles: play muted loops only while they are on screen.
+        watchVideo(video) {
+            video.muted = true;
+            if (prefersReducedMotion()) return;
+            if (!this.videoObserver) {
+                this.videoObserver = new IntersectionObserver(entries => {
+                    for (const entry of entries) {
+                        entry.target.dataset.visible = entry.isIntersecting ? '1' : '';
+                        this.updateVideo(entry.target);
+                    }
+                }, { threshold: 0.25 });
+            }
+            this.videoObserver.observe(video);
+        },
+
+        updateVideo(video) {
+            if (video.dataset.visible && !this.lightboxOpen) {
+                video.play().catch(() => {}); // autoplay can be refused (e.g. low-power mode); the poster stays
+            } else {
+                video.pause();
+            }
+        },
+
+        updateAllVideos() {
+            this.$root.querySelectorAll('.gallery-tile video').forEach(v => this.updateVideo(v));
+        },
+
+        stopVideoObserver() {
+            if (this.videoObserver) {
+                this.videoObserver.disconnect();
+                this.videoObserver = null;
+            }
+        },
+
+        lightboxIsOpen() {
+            return document.body.classList.contains('glightbox-open');
         },
 
         openLightbox(index) {
             this.closeLightbox();
             this.lightbox = GLightbox({
-                elements: this.active.gallery.images.map(image => ({ href: this.imageUrl(image.file), type: 'image' })),
+                elements: this.active.gallery.images.map(item => this.isVideo(item)
+                    ? { href: this.mediaUrl(item.file), type: 'video', source: 'local' }
+                    : { href: this.mediaUrl(item.file), type: 'image' }),
                 loop: true,
+                videosWidth: 'min(85vh, 92vw)', // all videos are square
+                plyr: {
+                    css: `https://cdn.jsdelivr.net/npm/plyr@${PLYR_VERSION}/dist/plyr.css`,
+                    js: `https://cdn.jsdelivr.net/npm/plyr@${PLYR_VERSION}/dist/plyr.min.js`,
+                    config: {
+                        muted: true, // the videos are silent; also required for autoplay on mobile
+                        loop: { active: true },
+                        controls: ['play-large', 'play', 'progress', 'current-time', 'fullscreen'],
+                    },
+                },
             });
+            // Pause grid videos behind the lightbox, resume them when it closes.
+            this.lightbox.on('close', () => {
+                this.lightboxOpen = false;
+                this.updateAllVideos();
+            });
+            this.lightboxOpen = true;
+            this.updateAllVideos();
             this.lightbox.openAt(index);
         },
 
@@ -93,12 +182,13 @@ document.addEventListener('alpine:init', () => {
             if (this.lightbox) {
                 this.lightbox.destroy();
                 this.lightbox = null;
+                this.lightboxOpen = false;
             }
         },
 
         onEscape() {
             // GLightbox handles Escape itself while it is open.
-            if (this.active && !document.body.classList.contains('glightbox-open')) {
+            if (this.active && !this.lightboxIsOpen()) {
                 this.closeGallery();
             }
         },
