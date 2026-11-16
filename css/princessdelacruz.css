@@ -184,6 +184,115 @@ footer a:hover {
     margin-left:auto;
 }
 
+/* Only projects with a gallery are clickable */
+.project-nav-item-link:not([href]) {
+    cursor: default;
+}
+
+/* Project gallery */
+section.is-gallery {
+    justify-content: flex-start;
+    align-items: stretch;
+    min-height: 0;
+    overflow-y: auto;
+}
+
+.gallery {
+    width: 100%;
+    max-width: 1200px;
+    margin-inline: auto;
+    padding: 1rem;
+}
+
+.gallery-header {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem 1rem;
+    margin-bottom: 1rem;
+    font-family: "Syne", sans-serif;
+    font-weight: 700;
+    letter-spacing: 0.05rem;
+    color: rgba(0, 0, 0, 0.85);
+}
+
+.gallery-back {
+    text-decoration: none;
+    color: inherit;
+}
+
+.gallery-back:hover {
+    color: #aaaaaa;
+}
+
+.gallery-title {
+    font-size: 1.9rem;
+}
+
+.gallery-subtitle {
+    font-family: "TeX Gyre Heros", sans-serif;
+    font-weight: 400;
+    font-size: 0.75rem;
+    letter-spacing: 0.02rem;
+}
+
+/* Bento grid: fixed-ratio cells, tiles span 1 or 2 columns/rows.
+   Row height is derived from the column width so cells keep their shape. */
+.gallery-bento {
+    --cols: 4;
+    --gap: 1rem;
+    --ratio: 0.8; /* row height / column width */
+    --grid-width: min(100vw - 2rem, 1200px - 2rem);
+    display: grid;
+    grid-template-columns: repeat(var(--cols), minmax(0, 1fr));
+    grid-auto-rows: calc((var(--grid-width) - (var(--cols) - 1) * var(--gap)) / var(--cols) * var(--ratio));
+    grid-auto-flow: dense;
+    gap: var(--gap);
+}
+
+.gallery-tile {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    border-radius: 10px;
+    background-color: #f2f2f2;
+}
+
+.gallery-tile.tile-big {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.gallery-tile.tile-tall {
+    grid-row: span 2;
+}
+
+.gallery-tile.tile-wide {
+    grid-column: span 2;
+}
+
+.gallery-tile img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease, opacity 0.2s ease;
+}
+
+.gallery-tile.tile-contain img {
+    object-fit: contain;
+    padding: 12%;
+}
+
+.gallery-tile:hover img {
+    transform: scale(1.04);
+}
+
+.gallery-tile:focus-visible {
+    outline: 2px solid rgba(0, 0, 0, 0.85);
+    outline-offset: 3px;
+}
+
 /* (xs) Extra Small devices */
 @media (max-width: 590px) {
     header {
@@ -233,6 +342,21 @@ footer a:hover {
     .linkedin-text {
         display:none;
     }
+    .gallery {
+        padding: 0.5rem;
+    }
+    .gallery-title {
+        font-size: 1.2rem;
+    }
+    .gallery-bento {
+        --cols: 2;
+        --gap: 0.5rem;
+        --ratio: 1;
+        --grid-width: calc(100vw - 1rem);
+    }
+    .gallery-tile {
+        border-radius: 6px;
+    }
 }
 
 /* (md) Medium devices (tablets, 768px and up) */
@@ -271,6 +395,16 @@ footer a:hover {
     }
     .linkedin-text {
         display: inline;
+    }
+}
+
+/* Tablets */
+@media (min-width: 590px) and (max-width: 991.98px) {
+    .gallery-title {
+        font-size: 1.5rem;
+    }
+    .gallery-bento {
+        --gap: 0.75rem;
     }
 }
 

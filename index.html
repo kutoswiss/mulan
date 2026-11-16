@@ -18,6 +18,11 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap">
     <!-- CSS file -->
     <link rel="stylesheet" href="css/princessdelacruz.css">
+    <!-- GLightbox (image lightbox for project galleries) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/css/glightbox.min.css" integrity="sha384-GPAzSuZc0kFvdIev6wm9zg8gnafE8tLso7rsAYQfc9hAdWCpOcpcNI5W9lWkYcsd" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/js/glightbox.min.js" integrity="sha384-MZZbZ6RXJudK43v1qY1zOWKOU2yfeBPatuFoKyHAaAgHTUZhwblRTc9CphTt4IGQ" crossorigin="anonymous"></script>
+    <!-- Site js file (must load before Alpine) -->
+    <script defer src="js/portfolio.js"></script>
     <!-- Alpine js file -->
     <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.17.5/dist/cdn.min.js" integrity="sha384-FYLKjwG3aohNhNZoVG8sY/5ntunm+MqylL90Q+rT3OM7AwV9/BKFjk/RjoIpIgsI" crossorigin="anonymous"></script>
 </head>
@@ -30,29 +35,47 @@
     </header>
 
     <!-- Middle section -->
-    <section>
-            <div class="project-container" x-data="{ projects: [
-                { title: 'PALEO FESTIVAL NYON', subtitle: 'VISUAL IDENTITY', image: '01-PFM.webp', size: '100%' },
-                { title: 'EDITORIAL', subtitle: '', image: '02-EDITORIAL.webp', size: '70%' },
-                { title: 'COMMUNICATION DIGITALE', subtitle: '', image: '03-COMDIGITALE.webp', size: '60%' },
-                { title: 'DSIR', subtitle: 'GRAPHIC DESIGN', image: '04-DSIR.webp', size: '60%' }, 
-                { title: 'ALL NAILZ ON ME', subtitle: 'NAIL ART', image: '05-NAILZ.webp', size: '80%' }, 
-                { title: 'DIGITAL LOVE POST', subtitle: 'CREATIVE CODING', image: '06-DLP.webp', size: '80%' }]}">
-                <template x-for="project in projects" :key="project.title">
-                    <div x-data="{ isHovered: false }">
-                        <div class="project-nav-item-image" x-show="isHovered">
-                            <img :src="'assets/images/' + project.image" :alt="project.title" :style="{ height: project.size }" />
-                        </div>
-                        <a class="project-nav-item-link" 
-                            @mouseover="isHovered = true" 
-                            @mouseleave="isHovered = false">
-                            <span class="project-nav-item-middot">&middot;</span>
-                            <span class="project-nav-item-title" x-text="project.title"></span>
-                            <span class="project-nav-item-subtitle" x-text="project.subtitle"></span>
-                        </a>
+    <section x-data="portfolio" :class="{ 'is-gallery': active }" @keydown.escape.window="onEscape()">
+        <!-- Project list -->
+        <div class="project-container" x-show="!active">
+            <template x-for="project in projects" :key="project.title">
+                <div x-data="{ isHovered: false }">
+                    <div class="project-nav-item-image" x-show="isHovered">
+                        <img :src="'assets/images/preview/' + project.image" :alt="project.title" :style="{ height: project.size }" />
                     </div>
-                </template>
+                    <a class="project-nav-item-link"
+                        :href="project.gallery ? '#' + project.slug : null"
+                        @mouseover="isHovered = true"
+                        @mouseleave="isHovered = false"
+                        @click="isHovered = false">
+                        <span class="project-nav-item-middot">&middot;</span>
+                        <span class="project-nav-item-title" x-text="project.title"></span>
+                        <span class="project-nav-item-subtitle" x-text="project.subtitle"></span>
+                    </a>
+                </div>
+            </template>
+        </div>
+
+        <!-- Project gallery -->
+        <template x-if="active">
+            <div class="gallery">
+                <div class="gallery-header">
+                    <a class="gallery-back" href="#" @click.prevent="closeGallery()">&larr; BACK</a>
+                    <span class="gallery-title" x-text="active.title"></span>
+                    <span class="gallery-subtitle" x-text="active.subtitle"></span>
+                </div>
+                <div class="gallery-bento">
+                    <template x-for="(image, index) in active.gallery.images" :key="image.file">
+                        <a class="gallery-tile"
+                            :class="['tile-' + (image.tile || 'normal'), { 'tile-contain': image.fit === 'contain' }]"
+                            :href="imageUrl(image.file)"
+                            @click.prevent="openLightbox(index)">
+                            <img :src="imageUrl(image.file, true)" :alt="active.title + ' ' + (index + 1)" loading="lazy">
+                        </a>
+                    </template>
+                </div>
             </div>
+        </template>
     </section>
 
     <!-- Footer -->
