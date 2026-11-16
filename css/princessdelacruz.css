@@ -288,6 +288,12 @@ section.is-gallery {
     transform: scale(1.04);
 }
 
+/* GLightbox sets `.glightbox-open { height: auto }` on <body> (≥769px) while open,
+   which releases the 100svh layout and pushes the footer off screen. Keep it locked. */
+body.glightbox-open {
+    height: 100svh;
+}
+
 .gallery-tile:focus-visible {
     outline: 2px solid rgba(0, 0, 0, 0.85);
     outline-offset: 3px;
