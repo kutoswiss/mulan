@@ -1,14 +1,38 @@
-/* Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@400..800&display=swap');
-
+/* Fonts (Syne is loaded from Google Fonts in index.html) */
 @font-face {
     font-family: 'TeX Gyre Heros';
     src: url('../assets/fonts/TeX Gyre Heros/texgyreheros-regular.otf') format('opentype');
     font-weight: normal;
     font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'TeX Gyre Heros';
+    src: url('../assets/fonts/TeX Gyre Heros/texgyreheros-bold.otf') format('opentype');
+    font-weight: bold;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* Base reset (replaces the parts of Bootstrap's reboot the layout relied on) */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+img,
+svg {
+    vertical-align: middle;
 }
 
 body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #212529;
+    background-color: #fff;
     display: flex;
     flex-direction: column;
     height:100svh;
@@ -20,7 +44,7 @@ header {
     font-size: 1.9rem;
     font-weight: 700;
     color: rgba(0, 0, 0, 0.85);
-    font-family: "Syne", Icons;
+    font-family: "Syne", sans-serif;
     font-style: normal;
     letter-spacing: 0.05rem;
     display:flex;
@@ -50,7 +74,7 @@ footer {
     font-size: 1.9rem;
     font-weight: 700;
     color: rgba(0, 0, 0, 0.85);
-    font-family: "Syne", Icons;
+    font-family: "Syne", sans-serif;
     font-style: normal;
     letter-spacing: 0.05rem;
     display:flex;
@@ -102,7 +126,7 @@ footer a:hover {
 .project-nav-item-title {
     font-size: 1.9rem;
     font-weight: 700;
-    font-family: "Syne", Icons;
+    font-family: "Syne", sans-serif;
     font-style: normal;
     letter-spacing: 0.05rem;
     vertical-align: top;
@@ -115,8 +139,7 @@ footer a:hover {
 .project-nav-item-subtitle {
     font-size: 0.75rem;
     font-weight: 400;
-    color: rgba(0, 0, 0, 0.85);
-    font-family: "TeX Gyre Heros", Icons;
+    font-family: "TeX Gyre Heros", sans-serif;
     font-style: normal;
     letter-spacing: 0.02rem;
     margin-left: 0.2rem;
@@ -131,10 +154,6 @@ footer a:hover {
     height: 100%;
     width: 100%;
     max-width: 100%;
-    object-fit: cover;
-    object-position: center;
-    background-size: cover;
-    background-position: center;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -209,7 +228,7 @@ footer a:hover {
     .linkedin-logo {
         margin-top:5px;
         height: 1.0rem;
-        display:visible;
+        display: inline;
     }
     .linkedin-text {
         display:none;
@@ -251,7 +270,7 @@ footer a:hover {
         display:none;
     }
     .linkedin-text {
-        display:visible;
+        display: inline;
     }
 }
 
@@ -283,26 +302,12 @@ footer a:hover {
     }
     .project-nav-item-subtitle {
         font-size: 0.75rem;
-        font-weight: 400;
-        color: rgba(0, 0, 0, 0.85);
-        font-family: "TeX Gyre Heros", Icons;
-        font-style: normal;
-        letter-spacing: 0.02rem;
-        margin-left: 0.2rem;
-        mix-blend-mode: difference;
-        color:white;
-        background-color: black;
-        z-index: 2;
         padding-top: 4px;
     }
     .linkedin-logo {
         display:none;
     }
     .linkedin-text{
-        display:visible;
+        display: inline;
     }
-}
-
-/* (xl) Extra large devices (large desktops, 1200px and up) */
-@media (min-width: 1200px) {
 }
