@@ -390,20 +390,29 @@ document.addEventListener('alpine:init', () => {
         onScreen: false,
         swipeStartX: null,
         swiped: false,
-        timer: null,    // declared here so each carousel keeps its own (Alpine would otherwise
-        observer: null, // store undeclared properties on the outer gallery component)
+        startTimer: null, // declared here so each carousel keeps its own (Alpine would otherwise
+        timer: null,      // store undeclared properties on the outer gallery component)
+        observer: null,
 
         init() {
             if (!item.autoplay || prefersReducedMotion()) return;
             const step = item.slide === 'right' ? () => this.prev() : () => this.next();
-            this.timer = setInterval(() => {
+            const tick = () => {
                 if (this.onScreen && !this.hovering && !this.lightboxOpen) step();
-            }, item.autoplay);
+            };
+            // Stagger: start each carousel at a different point of its cycle (spread by the
+            // golden ratio of its tile position), so carousels on screen together don't flip at once.
+            const offset = Math.round(((tileIndex * 0.618) % 1) * item.autoplay);
+            this.startTimer = setTimeout(() => {
+                tick();
+                this.timer = setInterval(tick, item.autoplay);
+            }, item.autoplay + offset);
             this.observer = new IntersectionObserver(([entry]) => { this.onScreen = entry.isIntersecting; }, { threshold: 0.4 });
             this.observer.observe(this.$el);
         },
 
         destroy() {
+            clearTimeout(this.startTimer);
             clearInterval(this.timer);
             this.observer?.disconnect();
         },

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <!-- Meta tags -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- Title -->
-    <title>Princess De La Cruz</title>
+    <title>Princess De La Cruz - Graphic Designer</title>
     <!-- Favicons -->
     <link rel="icon" href="assets/favicons/favicon.ico" sizes="any">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png">
@@ -19,22 +20,28 @@
     <!-- CSS file -->
     <link rel="stylesheet" href="css/princessdelacruz.css">
     <!-- GLightbox (image lightbox for project galleries) -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/css/glightbox.min.css" integrity="sha384-GPAzSuZc0kFvdIev6wm9zg8gnafE8tLso7rsAYQfc9hAdWCpOcpcNI5W9lWkYcsd" crossorigin="anonymous">
-    <script defer src="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/js/glightbox.min.js" integrity="sha384-MZZbZ6RXJudK43v1qY1zOWKOU2yfeBPatuFoKyHAaAgHTUZhwblRTc9CphTt4IGQ" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/css/glightbox.min.css"
+        integrity="sha384-GPAzSuZc0kFvdIev6wm9zg8gnafE8tLso7rsAYQfc9hAdWCpOcpcNI5W9lWkYcsd" crossorigin="anonymous">
+    <script defer src="https://cdn.jsdelivr.net/npm/glightbox@3.3.1/dist/js/glightbox.min.js"
+        integrity="sha384-MZZbZ6RXJudK43v1qY1zOWKOU2yfeBPatuFoKyHAaAgHTUZhwblRTc9CphTt4IGQ"
+        crossorigin="anonymous"></script>
     <!-- Site js file (must load before Alpine) -->
     <script defer src="js/portfolio.js"></script>
     <!-- Easter egg (try the Konami code) -->
     <script defer src="js/easter-egg.js"></script>
     <!-- Alpine js file -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.17.5/dist/cdn.min.js" integrity="sha384-FYLKjwG3aohNhNZoVG8sY/5ntunm+MqylL90Q+rT3OM7AwV9/BKFjk/RjoIpIgsI" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.17.5/dist/cdn.min.js"
+        integrity="sha384-FYLKjwG3aohNhNZoVG8sY/5ntunm+MqylL90Q+rT3OM7AwV9/BKFjk/RjoIpIgsI"
+        crossorigin="anonymous"></script>
 </head>
+
 <body>
     <!-- Header -->
     <header x-data>
         <img class="ying-yang-logo" src="assets/logo/YIN-YANG.svg" alt="Princess De La Cruz">
         <a href="https://www.princessdelacruz.ch">PRINCESS DE LA CRUZ</a>
-        <button class="header-info" type="button" aria-controls="cv-panel"
-            :aria-expanded="$store.cv.open.toString()" @click="$store.cv.show($el)">CV</button>
+        <button class="header-info" type="button" aria-controls="cv-panel" :aria-expanded="$store.cv.open.toString()"
+            @click="$store.cv.show($el)">CV</button>
     </header>
 
     <!-- Middle section -->
@@ -44,13 +51,11 @@
             <template x-for="project in projects" :key="project.title">
                 <div x-data="{ isHovered: false }">
                     <div class="project-nav-item-image" x-show="isHovered">
-                        <img :src="'assets/images/preview/' + project.image" :alt="project.title" :style="{ height: project.size }" loading="lazy" />
+                        <img :src="'assets/images/preview/' + project.image" :alt="project.title"
+                            :style="{ height: project.size }" loading="lazy" />
                     </div>
-                    <a class="project-nav-item-link"
-                        :href="project.gallery ? '#' + project.slug : null"
-                        @mouseover="isHovered = true"
-                        @mouseleave="isHovered = false"
-                        @click="isHovered = false">
+                    <a class="project-nav-item-link" :href="project.gallery ? '#' + project.slug : null"
+                        @mouseover="isHovered = true" @mouseleave="isHovered = false" @click="isHovered = false">
                         <span class="project-nav-item-middot">&middot;</span>
                         <span class="project-nav-item-title" x-text="project.title"></span>
                         <span class="project-nav-item-subtitle" x-text="project.subtitle"></span>
@@ -67,37 +72,39 @@
                     <span class="gallery-title" x-text="active.title"></span>
                     <span class="gallery-subtitle" x-text="active.subtitle"></span>
                 </div>
-                <div class="gallery-bento" :style="active.gallery.cellRatio ? { '--ratio': active.gallery.cellRatio } : {}">
+                <div class="gallery-bento"
+                    :style="active.gallery.cellRatio ? { '--ratio': active.gallery.cellRatio } : {}">
                     <template x-for="(image, index) in active.gallery.images" :key="image.file || image.carousel[0]">
                         <div class="gallery-tile"
                             :class="['tile-' + (image.tile || 'normal'), { 'tile-contain': image.fit === 'contain', 'tile-whole': image.fit === 'whole', 'tile-video': isVideo(image), 'tile-carousel': !!image.carousel }]">
                             <!-- Single image or video -->
                             <template x-if="!image.carousel">
-                                <a class="gallery-tile-link"
-                                    :href="mediaUrl(image.file)"
+                                <a class="gallery-tile-link" :href="mediaUrl(image.file)"
                                     :aria-label="active.title + ' ' + (flatIndex(index) + 1) + (isVideo(image) ? ' (video)' : '')"
                                     @click.prevent="openLightbox(flatIndex(index))">
                                     <template x-if="!isVideo(image)">
-                                        <img :src="mediaUrl(image.file, true)" :alt="active.title + ' ' + (flatIndex(index) + 1)" loading="lazy">
+                                        <img :src="mediaUrl(image.file, true)"
+                                            :alt="active.title + ' ' + (flatIndex(index) + 1)" loading="lazy">
                                     </template>
                                     <template x-if="isVideo(image)">
-                                        <video :src="mediaUrl(image.file, true)" :poster="posterUrl(image.file)"
-                                            muted loop playsinline preload="none" aria-hidden="true"
+                                        <video :src="mediaUrl(image.file, true)" :poster="posterUrl(image.file)" muted
+                                            loop playsinline preload="none" aria-hidden="true"
                                             x-init="watchVideo($el)"></video>
                                     </template>
                                 </a>
                             </template>
                             <!-- Carousel: several images in one tile, like an Instagram multi-image post -->
                             <template x-if="image.carousel">
-                                <div class="carousel" x-data="carousel(image, index)"
-                                    role="group" aria-roledescription="carousel"
-                                    :aria-label="active.title + ': ' + count + ' images'"
-                                    @mouseenter="hovering = true" @mouseleave="hovering = false"
-                                    @focusin="hovering = true" @focusout="hovering = false"
-                                    @keydown.arrow-right="onArrowKey($event, 1)" @keydown.arrow-left="onArrowKey($event, -1)">
+                                <div class="carousel" x-data="carousel(image, index)" role="group"
+                                    aria-roledescription="carousel"
+                                    :aria-label="active.title + ': ' + count + ' images'" @mouseenter="hovering = true"
+                                    @mouseleave="hovering = false" @focusin="hovering = true"
+                                    @focusout="hovering = false" @keydown.arrow-right="onArrowKey($event, 1)"
+                                    @keydown.arrow-left="onArrowKey($event, -1)">
                                     <div class="carousel-track"
                                         :style="{ transform: 'translateX(' + (-slide * 100) + '%)' }"
-                                        @pointerdown="swipeStart($event)" @pointerup="swipeEnd($event)" @pointercancel="swipeStartX = null">
+                                        @pointerdown="swipeStart($event)" @pointerup="swipeEnd($event)"
+                                        @pointercancel="swipeStartX = null">
                                         <template x-for="(file, i) in image.carousel" :key="file">
                                             <a class="carousel-slide" :href="mediaUrl(file)"
                                                 :tabindex="i === slide ? 0 : -1" :aria-hidden="(i !== slide).toString()"
@@ -107,9 +114,12 @@
                                             </a>
                                         </template>
                                     </div>
-                                    <span class="carousel-count" aria-hidden="true" x-text="(slide + 1) + '/' + count"></span>
-                                    <button class="carousel-arrow carousel-prev" type="button" @click="prev()" aria-label="Previous image">&#8249;</button>
-                                    <button class="carousel-arrow carousel-next" type="button" @click="next()" aria-label="Next image">&#8250;</button>
+                                    <span class="carousel-count" aria-hidden="true"
+                                        x-text="(slide + 1) + '/' + count"></span>
+                                    <button class="carousel-arrow carousel-prev" type="button" @click="prev()"
+                                        aria-label="Previous image">&#8249;</button>
+                                    <button class="carousel-arrow carousel-next" type="button" @click="next()"
+                                        aria-label="Next image">&#8250;</button>
                                     <div class="carousel-dots" aria-hidden="true">
                                         <template x-for="(file, i) in image.carousel" :key="file">
                                             <span :class="{ 'is-active': i === slide }"></span>
@@ -147,12 +157,14 @@
                 <div class="cv-entry">
                     <h4 class="cv-role">Graphiste freelance</h4>
                     <p class="cv-meta">Genève | Juil 2024 – Aujourd’hui</p>
-                    <p class="cv-text">Spécialisée en design visuel et identité de marque, avec une approche créative et polyvalente.</p>
+                    <p class="cv-text">Spécialisée en design visuel et identité de marque, avec une approche créative et
+                        polyvalente.</p>
                 </div>
                 <div class="cv-entry">
                     <h4 class="cv-role">Graphiste</h4>
                     <p class="cv-meta">Paléo Festival, HEAD-Genève | Mar 2024 – Juil 2024</p>
-                    <p class="cv-text">Gagnante de l’identité visuelle du Paléo Festival 2024. Création des animations sur grands écrans des scènes.</p>
+                    <p class="cv-text">Gagnante de l’identité visuelle du Paléo Festival 2024. Création des animations
+                        sur grands écrans des scènes.</p>
                 </div>
                 <div class="cv-entry">
                     <h4 class="cv-role">Print &amp; Design Specialist</h4>
@@ -166,20 +178,24 @@
                 <div class="cv-entry">
                     <h4 class="cv-role">Bachelor Communication visuelle</h4>
                     <p class="cv-meta">HEAD-Genève | Sept 2021 – Juin 2023</p>
-                    <p class="cv-text">Formation en communication visuelle dans le domaine de l’espace et du média design. Diplôme mention Très bien.</p>
+                    <p class="cv-text">Formation en communication visuelle dans le domaine de l’espace et du média
+                        design. Diplôme mention Très bien.</p>
                 </div>
                 <div class="cv-entry">
                     <h4 class="cv-role">Maturité artistique</h4>
                     <p class="cv-meta">CFP Arts Appliqués | Août 2010 – Juin 2014</p>
-                    <p class="cv-text">Acquisition d’une culture générale étendue : langue, histoire de l’art, économie, marketing, etc.</p>
+                    <p class="cv-text">Acquisition d’une culture générale étendue : langue, histoire de l’art, économie,
+                        marketing, etc.</p>
                 </div>
                 <div class="cv-entry">
                     <h4 class="cv-role">CFC Graphiste</h4>
                     <p class="cv-meta">CFP Arts Appliqués | Août 2010 – Juin 2014</p>
-                    <p class="cv-text">Capacité à concevoir, créer et réaliser des médias imprimés et électroniques dans un très vaste domaine d’activités (publicités, logos, packaging, etc.).</p>
+                    <p class="cv-text">Capacité à concevoir, créer et réaliser des médias imprimés et électroniques dans
+                        un très vaste domaine d’activités (publicités, logos, packaging, etc.).</p>
                 </div>
             </div>
         </aside>
     </div>
 </body>
+
 </html>
