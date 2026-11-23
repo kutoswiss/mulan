@@ -11,6 +11,7 @@ Portfolio website of graphic designer **Princess De La Cruz**, live at **[prince
 - **Lightbox**: click any tile to view the full image or video, with swipe, arrow keys and looping.
 - **Video tiles**: motion pieces play as muted loops, only while visible, and pause behind the lightbox. They stay still for visitors who prefer reduced motion.
 - **Shareable gallery links**: each gallery has its own URL (e.g. [`#paleo-festival-nyon`](https://princessdelacruz.ch/#paleo-festival-nyon)), and the back button and Escape close it.
+- **CV panel**: the header's CV button slides in a panel with the CV (experience and education).
 - **Responsive**: 4-column grid on desktop and tablet, 2 columns on phones.
 
 ## Tech
@@ -75,8 +76,9 @@ Projects are defined in the `PROJECTS` array in `js/portfolio.js`:
 ```
 
 - `tile`: `big` (2×2), `tall` (1×2), `wide` (2×1), or omitted for a single square cell. On the 4-column grid, choose tiles so each row adds up to 4 columns. Any gaps are back-filled automatically, but a full grid looks best.
-- `fit: 'contain'` shows the whole image (useful for logos) instead of cropping it to the tile.
-- Files ending in `.mp4` are treated as videos.
+- `fit: 'contain'` shows the whole image with padding (useful for logos); `fit: 'whole'` shows the whole image or video without padding (useful for posters with text near the edges).
+- Files ending in `.mp4` are treated as videos. Non-square videos need `ratio` (width / height, e.g. `ratio: 1080 / 1920`) so the lightbox sizes them correctly. Add `audio: true` to a video with sound: the lightbox then plays it unmuted with volume controls (grid tiles always stay muted).
+- Gallery option `cellRatio` sets the shape of the grid cells (row height / column width, default `0.8`). For example, the DSIR gallery uses `1` for square cells that fit its square posts.
 - Projects without `gallery` appear in the list, but they aren't clickable.
 
 ### Preparing media
@@ -107,7 +109,7 @@ Footage with a transparent background (e.g. ProRes 4444) should be flattened ont
 ffmpeg -i master.mov -filter_complex "color=white:s=1080x1080:r=30[bg];[0:v]scale=1080:1080,format=rgba[fg];[bg][fg]overlay=shortest=1,format=yuv420p" -an -c:v libx264 -preset slow -crf 26 -movflags +faststart 15-name.mp4
 ```
 
-Video masters (`*.mov`) and zip files in `archive/` are git-ignored. GitHub rejects files over 100 MB.
+Video masters (`*.mov`, `*.mp4`) and zip files in `archive/` are git-ignored. GitHub rejects files over 100 MB.
 
 ## Credits
 

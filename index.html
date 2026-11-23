@@ -30,10 +30,11 @@
 </head>
 <body>
     <!-- Header -->
-    <header>
+    <header x-data>
         <img class="ying-yang-logo" src="assets/logo/YIN-YANG.svg" alt="Princess De La Cruz">
         <a href="https://www.princessdelacruz.ch">PRINCESS DE LA CRUZ</a>
-        <a class="header-info" href="#">INFO</a>
+        <button class="header-info" type="button" aria-controls="cv-panel"
+            :aria-expanded="$store.cv.open.toString()" @click="$store.cv.show($el)">CV</button>
     </header>
 
     <!-- Middle section -->
@@ -66,10 +67,10 @@
                     <span class="gallery-title" x-text="active.title"></span>
                     <span class="gallery-subtitle" x-text="active.subtitle"></span>
                 </div>
-                <div class="gallery-bento">
+                <div class="gallery-bento" :style="active.gallery.cellRatio ? { '--ratio': active.gallery.cellRatio } : {}">
                     <template x-for="(image, index) in active.gallery.images" :key="image.file">
                         <a class="gallery-tile"
-                            :class="['tile-' + (image.tile || 'normal'), { 'tile-contain': image.fit === 'contain', 'tile-video': isVideo(image) }]"
+                            :class="['tile-' + (image.tile || 'normal'), { 'tile-contain': image.fit === 'contain', 'tile-whole': image.fit === 'whole', 'tile-video': isVideo(image) }]"
                             :href="mediaUrl(image.file)"
                             :aria-label="active.title + ' ' + (index + 1) + (isVideo(image) ? ' (video)' : '')"
                             @click.prevent="openLightbox(index)">
@@ -98,5 +99,52 @@
             PRINCESSD.CRUZ@GMAIL.COM
         </a>
     </footer>
+
+    <!-- CV side panel (opened from the header) -->
+    <div class="cv" x-data :class="{ 'is-open': $store.cv.open }">
+        <div class="cv-backdrop" @click="$store.cv.close()"></div>
+        <aside id="cv-panel" class="cv-panel" role="dialog" aria-modal="true" aria-label="CV" lang="fr"
+            x-effect="$el.inert = !$store.cv.open">
+            <button class="cv-close" type="button" @click="$store.cv.close()" aria-label="Fermer le CV">&times;</button>
+
+            <div class="cv-block">
+                <h3 class="cv-heading">Expériences</h3>
+                <div class="cv-entry">
+                    <h4 class="cv-role">Graphiste freelance</h4>
+                    <p class="cv-meta">Genève | Juil 2024 – Aujourd’hui</p>
+                    <p class="cv-text">Spécialisée en design visuel et identité de marque, avec une approche créative et polyvalente.</p>
+                </div>
+                <div class="cv-entry">
+                    <h4 class="cv-role">Graphiste</h4>
+                    <p class="cv-meta">Paléo Festival, HEAD-Genève | Mar 2024 – Juil 2024</p>
+                    <p class="cv-text">Gagnante de l’identité visuelle du Paléo Festival 2024. Création des animations sur grands écrans des scènes.</p>
+                </div>
+                <div class="cv-entry">
+                    <h4 class="cv-role">Print &amp; Design Specialist</h4>
+                    <p class="cv-meta">Philip Morris International | 2018 – 2020 ; Juil – Sep 2023</p>
+                    <p class="cv-text">Chargée de la communication visuelle interne ainsi que du printshop.</p>
+                </div>
+            </div>
+
+            <div class="cv-block">
+                <h3 class="cv-heading">Formations</h3>
+                <div class="cv-entry">
+                    <h4 class="cv-role">Bachelor Communication visuelle</h4>
+                    <p class="cv-meta">HEAD-Genève | Sept 2021 – Juin 2023</p>
+                    <p class="cv-text">Formation en communication visuelle dans le domaine de l’espace et du média design. Diplôme mention Très bien.</p>
+                </div>
+                <div class="cv-entry">
+                    <h4 class="cv-role">Maturité artistique</h4>
+                    <p class="cv-meta">CFP Arts Appliqués | Août 2010 – Juin 2014</p>
+                    <p class="cv-text">Acquisition d’une culture générale étendue : langue, histoire de l’art, économie, marketing, etc.</p>
+                </div>
+                <div class="cv-entry">
+                    <h4 class="cv-role">CFC Graphiste</h4>
+                    <p class="cv-meta">CFP Arts Appliqués | Août 2010 – Juin 2014</p>
+                    <p class="cv-text">Capacité à concevoir, créer et réaliser des médias imprimés et électroniques dans un très vaste domaine d’activités (publicités, logos, packaging, etc.).</p>
+                </div>
+            </div>
+        </aside>
+    </div>
 </body>
 </html>

@@ -184,6 +184,21 @@ footer a:hover {
     margin-left:auto;
 }
 
+/* The CV opener is a <button>: make it look like the header links */
+button.header-info {
+    font: inherit;
+    letter-spacing: inherit;
+    color: inherit;
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+}
+
+button.header-info:hover {
+    color: #aaaaaa;
+}
+
 /* Only projects with a gallery are clickable */
 .project-nav-item-link:not([href]) {
     cursor: default;
@@ -280,6 +295,11 @@ section.is-gallery {
     transition: transform 0.4s ease, opacity 0.2s ease;
 }
 
+.gallery-tile.tile-whole img,
+.gallery-tile.tile-whole video {
+    object-fit: contain;
+}
+
 .gallery-tile.tile-contain img {
     object-fit: contain;
     padding: 12%;
@@ -314,6 +334,145 @@ body.glightbox-open {
 .gallery-tile:focus-visible {
     outline: 2px solid rgba(0, 0, 0, 0.85);
     outline-offset: 3px;
+}
+
+/* CV side panel (opened from the header "CV" button) */
+.cv {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    pointer-events: none;
+}
+
+.cv.is-open {
+    pointer-events: auto;
+}
+
+.cv-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.cv.is-open .cv-backdrop {
+    opacity: 1;
+}
+
+.cv-panel {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: min(520px, 100vw);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 2.5rem 2rem calc(2.5rem + env(safe-area-inset-bottom));
+    background: #fff;
+    color: rgba(0, 0, 0, 0.85);
+    font-family: "TeX Gyre Heros", sans-serif;
+    box-shadow: -12px 0 40px rgba(0, 0, 0, 0.15);
+    transform: translateX(100%);
+    visibility: hidden;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 0.45s;
+}
+
+.cv.is-open .cv-panel {
+    transform: none;
+    visibility: visible;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cv-close {
+    position: absolute;
+    top: 1rem;
+    right: 1.25rem;
+    font-size: 2rem;
+    line-height: 1;
+    color: inherit;
+    background: none;
+    border: 0;
+    padding: 0.25rem;
+    cursor: pointer;
+}
+
+.cv-close:hover {
+    color: #aaaaaa;
+}
+
+.cv-block {
+    margin-bottom: 2rem;
+}
+
+.cv-heading {
+    margin: 0 0 1.25rem;
+    font-family: "Syne", sans-serif;
+    font-weight: 800;
+    font-size: 1.6rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+/* Timeline, as on the printed CV */
+.cv-entry {
+    position: relative;
+    padding: 0 0 1.25rem 1.25rem;
+    border-left: 1px solid #cfcfcf;
+}
+
+.cv-entry:last-child {
+    padding-bottom: 0.25rem;
+}
+
+.cv-entry::before {
+    content: "";
+    position: absolute;
+    left: -4px;
+    top: 0.35rem;
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: #8a8a8a;
+}
+
+.cv-role {
+    margin: 0 0 0.2rem;
+    font-family: "Syne", sans-serif;
+    font-weight: 700;
+    font-size: 0.95rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+}
+
+.cv-meta {
+    margin: 0 0 0.4rem;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    color: #8a8a8a;
+}
+
+.cv-text {
+    margin: 0;
+    font-size: 0.9rem;
+    line-height: 1.55;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cv-panel,
+    .cv.is-open .cv-panel,
+    .cv-backdrop {
+        transition: none;
+    }
+}
+
+@media (max-width: 590px) {
+    .cv-panel {
+        padding: 2rem 1.25rem calc(2rem + env(safe-area-inset-bottom));
+    }
+    .cv-heading {
+        font-size: 1.35rem;
+    }
 }
 
 /* Easter egg: clapping cat (js/easter-egg.js) */

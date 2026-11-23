@@ -33,3 +33,12 @@ CLAUDE.md
 # Large source media (ProRes masters, zips) - too big for git/GitHub (100 MB file limit)
 assets/images/archive/**/*.mov
 assets/images/archive/**/*.zip
+assets/images/archive/**/*.mp4
+assets/images/archive/**/*.tif
+assets/images/archive/**/*.tiff
+
+# Full CV (address, photo): the site shows an edited version in the CV panel
+assets/images/archive/*CV*.pdf
+
+# Raw originals: kept locally, never committed (the site only uses preview/ and gallery/)
+assets/images/archive/
