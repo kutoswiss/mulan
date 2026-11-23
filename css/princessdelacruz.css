@@ -449,7 +449,7 @@ body.glightbox-open {
     margin: 0 0 0.4rem;
     font-size: 0.75rem;
     letter-spacing: 0.08em;
-    color: #8a8a8a;
+    color: #6b6b6b; /* 5.3:1 on white, meets WCAG AA for small text */
 }
 
 .cv-text {

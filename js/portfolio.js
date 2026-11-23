@@ -333,10 +333,15 @@ document.addEventListener('alpine:init', () => {
         lightbox: null,
         lightboxOpen: false,
         videoObserver: null,
+        openedFromList: false, // gallery opened by clicking a project (vs. a direct link)
 
         init() {
             this.syncWithHash();
-            window.addEventListener('hashchange', () => this.syncWithHash());
+            window.addEventListener('hashchange', () => {
+                const wasOnList = !this.active;
+                this.syncWithHash();
+                this.openedFromList = wasOnList && !!this.active;
+            });
         },
 
         // The open gallery is driven by the URL hash, so the browser's back
@@ -349,9 +354,16 @@ document.addEventListener('alpine:init', () => {
             this.$root.scrollTop = 0;
         },
 
+        // "BACK": if the gallery was opened from the project list, step back in history,
+        // so the browser's own Back button doesn't reopen it afterwards.
+        // After a direct link there is no list page to go back to, so replace the URL instead.
         closeGallery() {
-            history.pushState(null, '', location.pathname + location.search);
-            this.syncWithHash();
+            if (this.openedFromList) {
+                history.back();
+            } else {
+                history.replaceState(null, '', location.pathname + location.search);
+                this.syncWithHash();
+            }
         },
 
         isVideo(item) {
@@ -416,22 +428,37 @@ document.addEventListener('alpine:init', () => {
                 plyr: {
                     css: `https://cdn.jsdelivr.net/npm/plyr@${PLYR_VERSION}/dist/plyr.css`,
                     js: `https://cdn.jsdelivr.net/npm/plyr@${PLYR_VERSION}/dist/plyr.min.js`,
-                    config: hasAudio ? {
+                    // Always start muted: GLightbox only autoplays on phones when the player config is muted.
+                    // Videos with `audio: true` are unmuted per slide in the slide_changed handler below.
+                    config: {
+                        muted: true,
                         loop: { active: true },
-                        controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen'],
-                    } : {
-                        muted: true, // silent videos; muting also lets them autoplay on mobile
-                        loop: { active: true },
-                        controls: ['play-large', 'play', 'progress', 'current-time', 'fullscreen'],
+                        controls: hasAudio
+                            ? ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'fullscreen']
+                            : ['play-large', 'play', 'progress', 'current-time', 'fullscreen'],
                     },
                 },
             });
-            // GLightbox has a single video size setting: switch it to the shape of each video slide.
             this.lightbox.on('slide_changed', ({ current }) => {
                 const item = this.active.gallery.images[current.index];
-                if (item && this.isVideo(item)) {
-                    this.lightbox.settings.videosWidth = this.videoWidth(item);
-                    this.lightbox.resize();
+                if (!item || !this.isVideo(item)) return;
+                // GLightbox has a single video size setting: switch it to the shape of each video slide.
+                this.lightbox.settings.videosWidth = this.videoWidth(item);
+                this.lightbox.resize();
+                // Sound only for videos marked `audio: true`; silent ones stay muted.
+                const player = current.player;
+                if (player) {
+                    player.muted = !item.audio;
+                    if (item.audio) {
+                        // If the browser refuses sound without a direct tap (some mobile browsers pause the
+                        // video), keep it playing muted; the visitor can still unmute with the volume button.
+                        setTimeout(() => {
+                            if (player.paused) {
+                                player.muted = true;
+                                player.play();
+                            }
+                        }, 300);
+                    }
                 }
             });
             // Pause grid videos behind the lightbox, resume them when it closes.

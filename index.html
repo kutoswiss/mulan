@@ -44,7 +44,7 @@
             <template x-for="project in projects" :key="project.title">
                 <div x-data="{ isHovered: false }">
                     <div class="project-nav-item-image" x-show="isHovered">
-                        <img :src="'assets/images/preview/' + project.image" :alt="project.title" :style="{ height: project.size }" />
+                        <img :src="'assets/images/preview/' + project.image" :alt="project.title" :style="{ height: project.size }" loading="lazy" />
                     </div>
                     <a class="project-nav-item-link"
                         :href="project.gallery ? '#' + project.slug : null"

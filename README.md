@@ -50,7 +50,7 @@ assets/
     preview/               hover previews, one per project (WebP)
     gallery/<folder>/      gallery files, numbered in display order
       thumbs/              grid versions (+ video posters)
-    archive/               full-resolution originals; not used by the page
+    archive/               full-resolution originals; not used by the page (git-ignored, local only)
 ```
 
 ## Adding or editing a project
@@ -109,7 +109,7 @@ Footage with a transparent background (e.g. ProRes 4444) should be flattened ont
 ffmpeg -i master.mov -filter_complex "color=white:s=1080x1080:r=30[bg];[0:v]scale=1080:1080,format=rgba[fg];[bg][fg]overlay=shortest=1,format=yuv420p" -an -c:v libx264 -preset slow -crf 26 -movflags +faststart 15-name.mp4
 ```
 
-Video masters (`*.mov`, `*.mp4`) and zip files in `archive/` are git-ignored. GitHub rejects files over 100 MB.
+The `archive/` folder is git-ignored: originals stay on your computer and are never published. GitHub rejects files over 100 MB.
 
 ## Credits
 
