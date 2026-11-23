@@ -11,6 +11,12 @@
 //              fit:  'contain' shows the whole image with padding (logos); 'whole' shows the whole image or video, no padding
 //              ratio: width / height of a non-square video, so the lightbox sizes it correctly (default 1)
 //              audio: true for a video with sound; the lightbox then starts it unmuted with volume controls
+//            Carousel item (several images in one tile, like an Instagram multi-image post):
+//              { carousel: ['a.webp', 'b.webp', ...], tile?, autoplay?: ms | false, slide?: 'left' | 'right' }
+//              autoplay: advance every N ms (omit or false = static, arrows/swipe only)
+//              slide: 'left' = images move leftwards, next one enters from the right (Instagram);
+//                     'right' = images move rightwards (left to right)
+//              Images only. In the lightbox each image is its own slide, in the carousel's order.
 //            Gallery option: cellRatio = row height / column width of the grid cells (default 0.8, landscape cells)
 //            Tip: on the 4-column grid, pick tiles so each row adds up to 4 columns.
 //            Empty cells are back-filled automatically, but a full grid looks best.
@@ -90,100 +96,148 @@ const PROJECTS = [
             cellRatio: 1.25, // 4:5 cells: every image is a 4:5 Instagram post
             images: [
                 // Wild Traxx (Feb 2025)
-                { file: '01-wildtraxx-poster.webp', tile: 'big' },
-                { file: '02-wildtraxx-lineup-video.mp4', fit: 'whole', ratio: 1080 / 1920, audio: true },
-                { file: '03-wildtraxx-dsir-video.mp4', ratio: 1080 / 1350, audio: true },
-                { file: '04-wildtraxx-mulahsanto-video.mp4', ratio: 1080 / 1350, audio: true },
-                { file: '05-wildtraxx-ozadya-video.mp4', ratio: 1080 / 1350, audio: true },
+                { file: '01-wildtraxx-poster.webp', tile: 'big'  },
+                { file: '02-wildtraxx-lineup-video.mp4', fit: 'whole', ratio: 1080 / 1920, audio: true  },
+                { file: '03-wildtraxx-dsir-video.mp4', ratio: 1080 / 1350, audio: true  },
+                { file: '04-wildtraxx-mulahsanto-video.mp4', ratio: 1080 / 1350, audio: true  },
+                { file: '05-wildtraxx-ozadya-video.mp4', ratio: 1080 / 1350, audio: true  },
                 // Fête de la Musique 2025
-                { file: '06-fdm25-poster.webp', tile: 'big' },
-                { file: '07-fdm25-lineup.webp' },
-                { file: '08-fdm25-schedule.webp' },
-                { file: '09-fdm25-battle-intro.webp' },
-                { file: '10-fdm25-battle-lineup.webp' },
-                { file: '11-fdm25-battle-01.webp' },
-                { file: '12-fdm25-battle-02.webp' },
-                { file: '13-fdm25-battle-03.webp' },
-                { file: '14-fdm25-battle-04.webp' },
-                { file: '15-fdm25-battle-05.webp' },
-                { file: '16-fdm25-battle-06.webp' },
-                { file: '17-fdm25-battle-07.webp' },
-                { file: '18-fdm25-battle-08.webp' },
-                { file: '19-fdm25-battle-09.webp' },
-                { file: '20-fdm25-battle-10.webp' },
-                { file: '21-fdm25-battle-11.webp' },
-                { file: '22-fdm25-battle-12.webp' },
-                { file: '23-fdm25-battle-13.webp' },
-                { file: '24-fdm25-f2f-intro.webp' },
-                { file: '25-fdm25-f2f-lineup.webp' },
-                { file: '26-fdm25-f2f-1.webp' },
-                { file: '27-fdm25-f2f-2.webp' },
-                { file: '28-fdm25-f2f-3.webp' },
-                { file: '29-fdm25-f2f-host.webp' },
-                { file: '30-fdm25-lives-intro.webp' },
-                { file: '31-fdm25-lives-lineup.webp' },
-                { file: '32-fdm25-lives-1.webp' },
-                { file: '33-fdm25-lives-2.webp' },
-                { file: '34-fdm25-lives-3.webp' },
-                { file: '35-fdm25-lives-4.webp' },
-                { file: '36-fdm25-lives-5.webp' },
+                { file: '06-fdm25-poster.webp', tile: 'big'  },
+                { file: '07-fdm25-lineup.webp'  },
+                { file: '08-fdm25-schedule.webp'  },
+                { file: '09-fdm25-battle-intro.webp'  },
+                { file: '10-fdm25-battle-lineup.webp'  },
+                // Battle: the 13 dancer cards as one Instagram-style carousel
+                {
+                    carousel: [
+                        '11-fdm25-battle-01.webp',
+                        '12-fdm25-battle-02.webp',
+                        '13-fdm25-battle-03.webp',
+                        '14-fdm25-battle-04.webp',
+                        '15-fdm25-battle-05.webp',
+                        '16-fdm25-battle-06.webp',
+                        '17-fdm25-battle-07.webp',
+                        '18-fdm25-battle-08.webp',
+                        '19-fdm25-battle-09.webp',
+                        '20-fdm25-battle-10.webp',
+                        '21-fdm25-battle-11.webp',
+                        '22-fdm25-battle-12.webp',
+                        '23-fdm25-battle-13.webp',
+                    ],
+                    tile: 'big', autoplay: 3000, slide: 'left',
+                },
+                { file: '24-fdm25-f2f-intro.webp'  },
+                { file: '25-fdm25-f2f-lineup.webp'  },
+                // Face2Face 2025 duos and host: one Instagram-style carousel
+                {
+                    carousel: [
+                        '26-fdm25-f2f-1.webp',
+                        '27-fdm25-f2f-2.webp',
+                        '28-fdm25-f2f-3.webp',
+                        '29-fdm25-f2f-host.webp',
+                    ],
+                    tile: 'big', autoplay: 3000, slide: 'left',
+                },
+                { file: '30-fdm25-lives-intro.webp'  },
+                { file: '31-fdm25-lives-lineup.webp'  },
+                // Lives 2025 artists: one Instagram-style carousel
+                {
+                    carousel: [
+                        '32-fdm25-lives-1.webp',
+                        '33-fdm25-lives-2.webp',
+                        '34-fdm25-lives-3.webp',
+                        '35-fdm25-lives-4.webp',
+                        '36-fdm25-lives-5.webp',
+                    ],
+                    tile: 'big', autoplay: 3000, slide: 'left',
+                },
                 // Le Mois Rouge 2025
-                { file: '37-lmr25-calendar.webp', tile: 'big' },
-                { file: '38-lmr25-video.mp4', fit: 'whole', ratio: 1080 / 1920 },
-                { file: '39-lmr25-01-08.webp' },
-                { file: '40-lmr25-08-08.webp' },
-                { file: '41-lmr25-16-08.webp' },
-                { file: '42-lmr25-23-08.webp' },
-                { file: '43-lmr25-29-08.webp' },
+                // Instagram multi-image post: one tile, swipeable; the lightbox shows each image
+                {
+                    carousel: ['39-lmr25-01-08.webp', '37-lmr25-calendar.webp', '40-lmr25-08-08.webp',
+                               '41-lmr25-16-08.webp', '42-lmr25-23-08.webp', '43-lmr25-29-08.webp'],
+                    tile: 'big', autoplay: 3000, slide: 'left',
+                },
+                { file: '38-lmr25-video.mp4', fit: 'whole', ratio: 1080 / 1920  },
                 // Planète Rouge Takeover (Oct 2025)
-                { file: '44-takeover-poster.webp', tile: 'big' },
-                { file: '45-takeover-lineup.webp' },
+                { file: '44-takeover-poster.webp'  },
+                { file: '45-takeover-lineup.webp'  },
                 // L'After – Tataki Awards 2025
-                { file: '46-tataki-poster.webp' },
-                { file: '47-tataki-dj-1.webp' },
-                { file: '48-tataki-dj-2.webp' },
-                { file: '49-tataki-dj-3.webp' },
-                { file: '50-tataki-dj-4.webp' },
+                { file: '46-tataki-poster.webp'  },
+                // Tataki Awards DJs: one Instagram-style carousel
+                {
+                    carousel: [
+                        '47-tataki-dj-1.webp',
+                        '48-tataki-dj-2.webp',
+                        '49-tataki-dj-3.webp',
+                        '50-tataki-dj-4.webp',
+                    ],
+                    tile: 'big', autoplay: 3000, slide: 'left',
+                },
                 // Time to Shine
-                { file: '51-timetoshine-anim.mp4', fit: 'whole', ratio: 1080 / 1920 },
-                { file: '52-timetoshine-battle.mp4', ratio: 1080 / 1350 },
-                { file: '53-timetoshine-contest.mp4', ratio: 1080 / 1350 },
-                { file: '54-timetoshine-club.mp4', ratio: 1080 / 1350 },
+                { file: '51-timetoshine-anim.mp4', fit: 'whole', ratio: 1080 / 1920  },
+                { file: '52-timetoshine-battle.mp4', ratio: 1080 / 1350  },
+                { file: '53-timetoshine-contest.mp4', ratio: 1080 / 1350  },
+                { file: '54-timetoshine-club.mp4', ratio: 1080 / 1350  },
                 // Planète Rouge – Le Club (Feb 2026)
-                { file: '55-le-club-poster.webp', tile: 'big' },
+                { file: '55-le-club-poster.webp', tile: 'big'  },
                 // Fête de la Musique 2026
-                { file: '56-fdm26-poster.webp', tile: 'big' },
-                { file: '57-fdm26-lineup.webp' },
-                { file: '58-fdm26-schedule.webp' },
-                { file: '59-fdm26-lives-intro.webp' },
-                { file: '60-fdm26-lives-lineup.webp' },
-                { file: '61-fdm26-lives-1.webp' },
-                { file: '62-fdm26-lives-2.webp' },
-                { file: '63-fdm26-lives-3.webp' },
-                { file: '64-fdm26-lives-4.webp' },
-                { file: '65-fdm26-lives-5.webp' },
-                { file: '66-fdm26-f2f-intro.webp' },
-                { file: '67-fdm26-f2f-lineup.webp' },
-                { file: '68-fdm26-f2f-1.webp' },
-                { file: '69-fdm26-f2f-2.webp' },
-                { file: '70-fdm26-f2f-3.webp' },
-                { file: '71-fdm26-f2f-4.webp' },
-                { file: '72-fdm26-f2f-host.webp' },
-                { file: '73-fdm26-after-intro.webp' },
-                { file: '74-fdm26-after-lineup.webp' },
-                { file: '75-fdm26-after-1.webp' },
-                { file: '76-fdm26-after-2.webp' },
-                { file: '77-fdm26-after-3.webp' },
-                { file: '78-fdm26-after-4.webp' },
+                { file: '56-fdm26-poster.webp', tile: 'big'  },
+                { file: '57-fdm26-lineup.webp'  },
+                { file: '58-fdm26-schedule.webp'  },
+                { file: '59-fdm26-lives-intro.webp'  },
+                { file: '60-fdm26-lives-lineup.webp'  },
+                // Lives 2026 artists: one Instagram-style carousel
+                {
+                    carousel: [
+                        '61-fdm26-lives-1.webp',
+                        '62-fdm26-lives-2.webp',
+                        '63-fdm26-lives-3.webp',
+                        '64-fdm26-lives-4.webp',
+                        '65-fdm26-lives-5.webp',
+                    ],
+                    tile: 'big', autoplay: 3000, slide: 'left',
+                },
+                { file: '66-fdm26-f2f-intro.webp'  },
+                { file: '67-fdm26-f2f-lineup.webp'  },
+                // Face2Face 2026 duos and host: one Instagram-style carousel
+                {
+                    carousel: [
+                        '68-fdm26-f2f-1.webp',
+                        '69-fdm26-f2f-2.webp',
+                        '70-fdm26-f2f-3.webp',
+                        '71-fdm26-f2f-4.webp',
+                        '72-fdm26-f2f-host.webp',
+                    ],
+                    tile: 'big', autoplay: 3000, slide: 'left',
+                },
+                { file: '73-fdm26-after-intro.webp'  },
+                { file: '74-fdm26-after-lineup.webp'  },
+                // L'After 2026 artists: one Instagram-style carousel
+                {
+                    carousel: [
+                        '75-fdm26-after-1.webp',
+                        '76-fdm26-after-2.webp',
+                        '77-fdm26-after-3.webp',
+                        '78-fdm26-after-4.webp',
+                    ],
+                    tile: 'big', autoplay: 3000, slide: 'left',
+                },
                 // Le Mois Rouge 2026
-                { file: '79-lmr26-calendar.webp' },
-                { file: '80-lmr26-juillet-video.mp4', fit: 'whole', ratio: 1080 / 1920 },
-                { file: '81-lmr26-aout-video.mp4', fit: 'whole', ratio: 1080 / 1920 },
-                { file: '82-lmr26-03-07.webp' },
-                { file: '83-lmr26-05-07.webp' },
-                { file: '84-lmr26-11-07.webp' },
-                { file: '85-lmr26-11-07-b.webp' },
-                { file: '86-lmr26-25-07.webp' },
+                { file: '79-lmr26-calendar.webp'  },
+                { file: '80-lmr26-juillet-video.mp4', fit: 'whole', ratio: 1080 / 1920  },
+                { file: '81-lmr26-aout-video.mp4', fit: 'whole', ratio: 1080 / 1920  },
+                // Le Mois Rouge 2026 tickets: one Instagram-style carousel
+                {
+                    carousel: [
+                        '82-lmr26-03-07.webp',
+                        '83-lmr26-05-07.webp',
+                        '84-lmr26-11-07.webp',
+                        '85-lmr26-11-07-b.webp',
+                        '86-lmr26-25-07.webp',
+                    ],
+                    autoplay: 3000, slide: 'left',
+                },
             ],
         },
     },
@@ -327,6 +381,65 @@ document.addEventListener('alpine:init', () => {
         },
     });
 
+    // A carousel tile inside a gallery (see "Carousel item" at the top of this file).
+    // Nested in the portfolio component, so it can use openLightbox(), flatIndex() and lightboxOpen.
+    Alpine.data('carousel', (item, tileIndex) => ({
+        slide: 0,
+        count: item.carousel.length,
+        hovering: false,
+        onScreen: false,
+        swipeStartX: null,
+        swiped: false,
+        timer: null,    // declared here so each carousel keeps its own (Alpine would otherwise
+        observer: null, // store undeclared properties on the outer gallery component)
+
+        init() {
+            if (!item.autoplay || prefersReducedMotion()) return;
+            const step = item.slide === 'right' ? () => this.prev() : () => this.next();
+            this.timer = setInterval(() => {
+                if (this.onScreen && !this.hovering && !this.lightboxOpen) step();
+            }, item.autoplay);
+            this.observer = new IntersectionObserver(([entry]) => { this.onScreen = entry.isIntersecting; }, { threshold: 0.4 });
+            this.observer.observe(this.$el);
+        },
+
+        destroy() {
+            clearInterval(this.timer);
+            this.observer?.disconnect();
+        },
+
+        // ← → move the carousel only while it has focus and the lightbox is closed.
+        // With the lightbox open, the keys must reach GLightbox (it listens on the document).
+        onArrowKey(event, direction) {
+            if (this.lightboxOpen) return;
+            event.stopPropagation();
+            direction > 0 ? this.next() : this.prev();
+        },
+
+        next() { this.slide = (this.slide + 1) % this.count; },
+        prev() { this.slide = (this.slide - 1 + this.count) % this.count; },
+
+        // Swipe with a finger or the mouse; a swipe must not also count as a click.
+        swipeStart(event) {
+            this.swipeStartX = event.clientX;
+            this.swiped = false;
+        },
+        swipeEnd(event) {
+            if (this.swipeStartX === null) return;
+            const dx = event.clientX - this.swipeStartX;
+            this.swipeStartX = null;
+            if (Math.abs(dx) > 40) {
+                this.swiped = true;
+                dx < 0 ? this.next() : this.prev();
+            }
+        },
+
+        open() {
+            if (this.swiped) { this.swiped = false; return; }
+            this.openLightbox(this.flatIndex(tileIndex, this.slide));
+        },
+    }));
+
     Alpine.data('portfolio', () => ({
         projects: PROJECTS,
         active: null,
@@ -367,7 +480,19 @@ document.addEventListener('alpine:init', () => {
         },
 
         isVideo(item) {
-            return item.file.endsWith('.mp4');
+            return !!item.file && item.file.endsWith('.mp4');
+        },
+
+        // Gallery items with carousels expanded into their images: what the lightbox steps through.
+        flatItems() {
+            return this.active.gallery.images.flatMap(item =>
+                item.carousel ? item.carousel.map(file => ({ file })) : [item]);
+        },
+
+        // Lightbox position of tile `index` (plus the slide shown, for a carousel).
+        flatIndex(index, slide = 0) {
+            return this.active.gallery.images.slice(0, index)
+                .reduce((n, item) => n + (item.carousel ? item.carousel.length : 1), 0) + slide;
         },
 
         mediaUrl(file, thumb = false) {
@@ -416,15 +541,17 @@ document.addEventListener('alpine:init', () => {
             return document.body.classList.contains('glightbox-open');
         },
 
+        // `index` is a position in flatItems() (see flatIndex()).
         openLightbox(index) {
             this.closeLightbox();
-            const hasAudio = this.active.gallery.images.some(item => this.isVideo(item) && item.audio);
+            const items = this.flatItems();
+            const hasAudio = items.some(item => this.isVideo(item) && item.audio);
             this.lightbox = GLightbox({
-                elements: this.active.gallery.images.map(item => this.isVideo(item)
+                elements: items.map(item => this.isVideo(item)
                     ? { href: this.mediaUrl(item.file), type: 'video', source: 'local' }
                     : { href: this.mediaUrl(item.file), type: 'image' }),
                 loop: true,
-                videosWidth: this.videoWidth(this.active.gallery.images[index]),
+                videosWidth: this.videoWidth(items[index]),
                 plyr: {
                     css: `https://cdn.jsdelivr.net/npm/plyr@${PLYR_VERSION}/dist/plyr.css`,
                     js: `https://cdn.jsdelivr.net/npm/plyr@${PLYR_VERSION}/dist/plyr.min.js`,
@@ -440,7 +567,7 @@ document.addEventListener('alpine:init', () => {
                 },
             });
             this.lightbox.on('slide_changed', ({ current }) => {
-                const item = this.active.gallery.images[current.index];
+                const item = items[current.index];
                 if (!item || !this.isVideo(item)) return;
                 // GLightbox has a single video size setting: switch it to the shape of each video slide.
                 this.lightbox.settings.videosWidth = this.videoWidth(item);

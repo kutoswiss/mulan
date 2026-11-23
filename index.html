@@ -68,21 +68,56 @@
                     <span class="gallery-subtitle" x-text="active.subtitle"></span>
                 </div>
                 <div class="gallery-bento" :style="active.gallery.cellRatio ? { '--ratio': active.gallery.cellRatio } : {}">
-                    <template x-for="(image, index) in active.gallery.images" :key="image.file">
-                        <a class="gallery-tile"
-                            :class="['tile-' + (image.tile || 'normal'), { 'tile-contain': image.fit === 'contain', 'tile-whole': image.fit === 'whole', 'tile-video': isVideo(image) }]"
-                            :href="mediaUrl(image.file)"
-                            :aria-label="active.title + ' ' + (index + 1) + (isVideo(image) ? ' (video)' : '')"
-                            @click.prevent="openLightbox(index)">
-                            <template x-if="!isVideo(image)">
-                                <img :src="mediaUrl(image.file, true)" :alt="active.title + ' ' + (index + 1)" loading="lazy">
+                    <template x-for="(image, index) in active.gallery.images" :key="image.file || image.carousel[0]">
+                        <div class="gallery-tile"
+                            :class="['tile-' + (image.tile || 'normal'), { 'tile-contain': image.fit === 'contain', 'tile-whole': image.fit === 'whole', 'tile-video': isVideo(image), 'tile-carousel': !!image.carousel }]">
+                            <!-- Single image or video -->
+                            <template x-if="!image.carousel">
+                                <a class="gallery-tile-link"
+                                    :href="mediaUrl(image.file)"
+                                    :aria-label="active.title + ' ' + (flatIndex(index) + 1) + (isVideo(image) ? ' (video)' : '')"
+                                    @click.prevent="openLightbox(flatIndex(index))">
+                                    <template x-if="!isVideo(image)">
+                                        <img :src="mediaUrl(image.file, true)" :alt="active.title + ' ' + (flatIndex(index) + 1)" loading="lazy">
+                                    </template>
+                                    <template x-if="isVideo(image)">
+                                        <video :src="mediaUrl(image.file, true)" :poster="posterUrl(image.file)"
+                                            muted loop playsinline preload="none" aria-hidden="true"
+                                            x-init="watchVideo($el)"></video>
+                                    </template>
+                                </a>
                             </template>
-                            <template x-if="isVideo(image)">
-                                <video :src="mediaUrl(image.file, true)" :poster="posterUrl(image.file)"
-                                    muted loop playsinline preload="none" aria-hidden="true"
-                                    x-init="watchVideo($el)"></video>
+                            <!-- Carousel: several images in one tile, like an Instagram multi-image post -->
+                            <template x-if="image.carousel">
+                                <div class="carousel" x-data="carousel(image, index)"
+                                    role="group" aria-roledescription="carousel"
+                                    :aria-label="active.title + ': ' + count + ' images'"
+                                    @mouseenter="hovering = true" @mouseleave="hovering = false"
+                                    @focusin="hovering = true" @focusout="hovering = false"
+                                    @keydown.arrow-right="onArrowKey($event, 1)" @keydown.arrow-left="onArrowKey($event, -1)">
+                                    <div class="carousel-track"
+                                        :style="{ transform: 'translateX(' + (-slide * 100) + '%)' }"
+                                        @pointerdown="swipeStart($event)" @pointerup="swipeEnd($event)" @pointercancel="swipeStartX = null">
+                                        <template x-for="(file, i) in image.carousel" :key="file">
+                                            <a class="carousel-slide" :href="mediaUrl(file)"
+                                                :tabindex="i === slide ? 0 : -1" :aria-hidden="(i !== slide).toString()"
+                                                :aria-label="active.title + ' ' + (flatIndex(index, i) + 1) + ' (' + (i + 1) + '/' + count + ')'"
+                                                @click.prevent="open()">
+                                                <img :src="mediaUrl(file, true)" alt="" draggable="false">
+                                            </a>
+                                        </template>
+                                    </div>
+                                    <span class="carousel-count" aria-hidden="true" x-text="(slide + 1) + '/' + count"></span>
+                                    <button class="carousel-arrow carousel-prev" type="button" @click="prev()" aria-label="Previous image">&#8249;</button>
+                                    <button class="carousel-arrow carousel-next" type="button" @click="next()" aria-label="Next image">&#8250;</button>
+                                    <div class="carousel-dots" aria-hidden="true">
+                                        <template x-for="(file, i) in image.carousel" :key="file">
+                                            <span :class="{ 'is-active': i === slide }"></span>
+                                        </template>
+                                    </div>
+                                </div>
                             </template>
-                        </a>
+                        </div>
                     </template>
                 </div>
             </div>
