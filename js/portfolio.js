@@ -96,17 +96,17 @@ const PROJECTS = [
             cellRatio: 1.25, // 4:5 cells: every image is a 4:5 Instagram post
             images: [
                 // Wild Traxx (Feb 2025)
-                { file: '01-wildtraxx-poster.webp', tile: 'big'  },
-                { file: '02-wildtraxx-lineup-video.mp4', fit: 'whole', ratio: 1080 / 1920, audio: true  },
-                { file: '03-wildtraxx-dsir-video.mp4', ratio: 1080 / 1350, audio: true  },
-                { file: '04-wildtraxx-mulahsanto-video.mp4', ratio: 1080 / 1350, audio: true  },
-                { file: '05-wildtraxx-ozadya-video.mp4', ratio: 1080 / 1350, audio: true  },
+                { file: '01-wildtraxx-poster.webp', tile: 'big' },
+                { file: '02-wildtraxx-lineup-video.mp4', fit: 'whole', ratio: 1080 / 1920, audio: true },
+                { file: '03-wildtraxx-dsir-video.mp4', ratio: 1080 / 1350, audio: true },
+                { file: '04-wildtraxx-mulahsanto-video.mp4', ratio: 1080 / 1350, audio: true },
+                { file: '05-wildtraxx-ozadya-video.mp4', ratio: 1080 / 1350, audio: true },
                 // Fête de la Musique 2025
-                { file: '06-fdm25-poster.webp', tile: 'big'  },
-                { file: '07-fdm25-lineup.webp'  },
-                { file: '08-fdm25-schedule.webp'  },
-                { file: '09-fdm25-battle-intro.webp'  },
-                { file: '10-fdm25-battle-lineup.webp'  },
+                { file: '06-fdm25-poster.webp', tile: 'big' },
+                { file: '07-fdm25-lineup.webp' },
+                { file: '08-fdm25-schedule.webp' },
+                { file: '09-fdm25-battle-intro.webp' },
+                { file: '10-fdm25-battle-lineup.webp' },
                 // Battle: the 13 dancer cards as one Instagram-style carousel
                 {
                     carousel: [
@@ -126,8 +126,8 @@ const PROJECTS = [
                     ],
                     tile: 'big', autoplay: 3000, slide: 'left',
                 },
-                { file: '24-fdm25-f2f-intro.webp'  },
-                { file: '25-fdm25-f2f-lineup.webp'  },
+                { file: '24-fdm25-f2f-intro.webp' },
+                { file: '25-fdm25-f2f-lineup.webp' },
                 // Face2Face 2025 duos and host: one Instagram-style carousel
                 {
                     carousel: [
@@ -138,8 +138,8 @@ const PROJECTS = [
                     ],
                     tile: 'big', autoplay: 3000, slide: 'left',
                 },
-                { file: '30-fdm25-lives-intro.webp'  },
-                { file: '31-fdm25-lives-lineup.webp'  },
+                { file: '30-fdm25-lives-intro.webp' },
+                { file: '31-fdm25-lives-lineup.webp' },
                 // Lives 2025 artists: one Instagram-style carousel
                 {
                     carousel: [
@@ -154,39 +154,45 @@ const PROJECTS = [
                 // Le Mois Rouge 2025
                 // Instagram multi-image post: one tile, swipeable; the lightbox shows each image
                 {
-                    carousel: ['39-lmr25-01-08.webp', '37-lmr25-calendar.webp', '40-lmr25-08-08.webp',
-                               '41-lmr25-16-08.webp', '42-lmr25-23-08.webp', '43-lmr25-29-08.webp'],
+                    carousel: [
+                        '37-lmr25-calendar.webp',
+                        '39-lmr25-01-08.webp',
+                        '40-lmr25-08-08.webp',
+                        '41-lmr25-16-08.webp',
+                        '42-lmr25-23-08.webp',
+                        '43-lmr25-29-08.webp',
+                    ],
                     tile: 'big', autoplay: 3000, slide: 'left',
                 },
-                { file: '38-lmr25-video.mp4', fit: 'whole', ratio: 1080 / 1920  },
+                { file: '38-lmr25-video.mp4', fit: 'whole', ratio: 1080 / 1920 },
                 // Planète Rouge Takeover (Oct 2025)
-                { file: '44-takeover-poster.webp'  },
-                { file: '45-takeover-lineup.webp'  },
+                { file: '44-takeover-poster.webp' },
+                { file: '45-takeover-lineup.webp' },
                 // L'After – Tataki Awards 2025
-                { file: '46-tataki-poster.webp'  },
+                { file: '46-tataki-poster.webp' },
                 // Tataki Awards DJs: one Instagram-style carousel
                 {
                     carousel: [
-                        '47-tataki-dj-1.webp',
                         '48-tataki-dj-2.webp',
-                        '49-tataki-dj-3.webp',
                         '50-tataki-dj-4.webp',
+                        '47-tataki-dj-1.webp',
+                        '49-tataki-dj-3.webp',
                     ],
                     tile: 'big', autoplay: 3000, slide: 'left',
                 },
                 // Time to Shine
-                { file: '51-timetoshine-anim.mp4', fit: 'whole', ratio: 1080 / 1920  },
-                { file: '52-timetoshine-battle.mp4', ratio: 1080 / 1350  },
-                { file: '53-timetoshine-contest.mp4', ratio: 1080 / 1350  },
-                { file: '54-timetoshine-club.mp4', ratio: 1080 / 1350  },
+                { file: '51-timetoshine-anim.mp4', fit: 'whole', ratio: 1080 / 1920 },
+                { file: '52-timetoshine-battle.mp4', ratio: 1080 / 1350 },
+                { file: '53-timetoshine-contest.mp4', ratio: 1080 / 1350 },
+                { file: '54-timetoshine-club.mp4', ratio: 1080 / 1350 },
                 // Planète Rouge – Le Club (Feb 2026)
-                { file: '55-le-club-poster.webp', tile: 'big'  },
+                { file: '55-le-club-poster.webp', tile: 'big' },
                 // Fête de la Musique 2026
-                { file: '56-fdm26-poster.webp', tile: 'big'  },
-                { file: '57-fdm26-lineup.webp'  },
-                { file: '58-fdm26-schedule.webp'  },
-                { file: '59-fdm26-lives-intro.webp'  },
-                { file: '60-fdm26-lives-lineup.webp'  },
+                { file: '56-fdm26-poster.webp', tile: 'big' },
+                { file: '57-fdm26-lineup.webp' },
+                { file: '58-fdm26-schedule.webp' },
+                { file: '59-fdm26-lives-intro.webp' },
+                { file: '60-fdm26-lives-lineup.webp' },
                 // Lives 2026 artists: one Instagram-style carousel
                 {
                     carousel: [
@@ -198,8 +204,8 @@ const PROJECTS = [
                     ],
                     tile: 'big', autoplay: 3000, slide: 'left',
                 },
-                { file: '66-fdm26-f2f-intro.webp'  },
-                { file: '67-fdm26-f2f-lineup.webp'  },
+                { file: '66-fdm26-f2f-intro.webp' },
+                { file: '67-fdm26-f2f-lineup.webp' },
                 // Face2Face 2026 duos and host: one Instagram-style carousel
                 {
                     carousel: [
@@ -211,8 +217,8 @@ const PROJECTS = [
                     ],
                     tile: 'big', autoplay: 3000, slide: 'left',
                 },
-                { file: '73-fdm26-after-intro.webp'  },
-                { file: '74-fdm26-after-lineup.webp'  },
+                { file: '73-fdm26-after-intro.webp' },
+                { file: '74-fdm26-after-lineup.webp' },
                 // L'After 2026 artists: one Instagram-style carousel
                 {
                     carousel: [
@@ -224,9 +230,9 @@ const PROJECTS = [
                     tile: 'big', autoplay: 3000, slide: 'left',
                 },
                 // Le Mois Rouge 2026
-                { file: '79-lmr26-calendar.webp'  },
-                { file: '80-lmr26-juillet-video.mp4', fit: 'whole', ratio: 1080 / 1920  },
-                { file: '81-lmr26-aout-video.mp4', fit: 'whole', ratio: 1080 / 1920  },
+                { file: '79-lmr26-calendar.webp' },
+                { file: '80-lmr26-juillet-video.mp4', fit: 'whole', ratio: 1080 / 1920 },
+                { file: '81-lmr26-aout-video.mp4', fit: 'whole', ratio: 1080 / 1920 },
                 // Le Mois Rouge 2026 tickets: one Instagram-style carousel
                 {
                     carousel: [
