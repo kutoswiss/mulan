@@ -163,9 +163,6 @@ const PROJECTS = [
                     tile: 'big', autoplay: 3000, slide: 'left',
                 },
                 { file: '38-lmr25-video.mp4', fit: 'whole', ratio: 1080 / 1920 },
-                // Planète Rouge Takeover (Oct 2025)
-                { file: '44-takeover-poster.webp' },
-                { file: '45-takeover-lineup.webp' },
                 // L'After – Tataki Awards 2025
                 // Tataki Awards DJs: one Instagram-style carousel
                 {
@@ -184,9 +181,9 @@ const PROJECTS = [
                 { file: '53-timetoshine-contest.mp4', ratio: 1080 / 1350 },
                 { file: '54-timetoshine-club.mp4', ratio: 1080 / 1350 },
                 // Planète Rouge – Le Club (Feb 2026)
-                { file: '55-le-club-poster.webp', tile: 'big' },
+                { file: '55-le-club-poster.webp' },
                 // Fête de la Musique 2026
-                { file: '56-fdm26-poster.webp', tile: 'big' },
+                { file: '56-fdm26-poster.webp' },
                 { file: '57-fdm26-lineup.webp' },
                 { file: '58-fdm26-schedule.webp' },
                 // Lives 2026 artists: one Instagram-style carousel
